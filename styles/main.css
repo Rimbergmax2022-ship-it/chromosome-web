@@ -286,17 +286,22 @@ section { position: relative; }
 .card:hover { border-color: rgba(201,168,106,.4); box-shadow: 0 30px 60px -30px rgba(0,0,0,.7); }
 .card:hover::before { opacity: 1; }
 .card__media {
-  position: relative; aspect-ratio: 3/4; display: grid; place-items: center;
-  margin-bottom: 18px; transform: translateZ(40px);
+  position: relative; aspect-ratio: 4/5; display: block; overflow: hidden;
+  margin-bottom: 18px; border-radius: 16px; transform: translateZ(40px);
+  background: linear-gradient(160deg, #f4efe6 0%, #e7ddca 60%, #dccbb0 100%);
 }
-.card__media img { height: 100%; width: auto; filter: drop-shadow(0 24px 30px rgba(0,0,0,.5)); transition: transform .6s var(--ease-out); }
-.card:hover .card__media img { transform: translateY(-8px) scale(1.04); }
+.card__media img { width: 100%; height: 100%; object-fit: cover; object-position: center;
+  transition: transform .8s var(--ease-out); }
+.card__media.is-fallback { background: radial-gradient(120% 100% at 50% 0%, rgba(201,168,106,.18), transparent 60%), #14150f; }
+.card__media.is-fallback img { object-fit: contain; padding: 14px; }
+.card:hover .card__media img { transform: scale(1.06); }
 .card__tag {
-  position: absolute; top: 0; inset-inline-start: 0; font-size: .7rem; letter-spacing: .12em;
-  color: var(--emerald); border: 1px solid rgba(127,209,185,.35); padding: .35em .9em; border-radius: 100px;
-  text-transform: uppercase;
+  position: absolute; top: 14px; inset-inline-start: 14px; z-index: 2; font-size: .68rem; letter-spacing: .12em;
+  color: #2a2010; background: rgba(244,239,230,.9); padding: .4em 1em; border-radius: 100px;
+  text-transform: uppercase; font-weight: 500; backdrop-filter: blur(4px);
 }
-.card__name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; margin-bottom: 6px; }
+.card__name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; margin-bottom: 2px; }
+.card__en { font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
 .card__desc { color: var(--ink-dim); font-size: .92rem; min-height: 3.4em; }
 .card__foot { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
 .card__price { font-family: var(--font-display); font-size: 1.3rem; color: var(--gold-lt); }

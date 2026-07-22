@@ -7,30 +7,50 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- Product data (EDIT ME — swap prices/images/text) ---------- */
+  /* ---------- Product data ----------
+     מקור אמת: החנות של Chromosome Cosmetics ב-Shopify (products.json).
+     img   = תמונת המוצר האמיתית מ-Shopify CDN (ציבורית).
+     fallback = איור מקומי שמוצג אם התמונה לא נטענת.
+     handle = הכתובת בחנות (chromosomecosmetics.com/products/<handle>).
+  */
+  const CDN = 'https://cdn.shopify.com/s/files/1/0792/1342/8965/files/';
   const PRODUCTS = [
-    { img: 'assets/product-1.svg', tag: 'רב מכר', name: 'סרום ההתחדשות', desc: 'סרום פפטידים מרוכז למיצוק, החלקת קווים והברקת גוון העור.', price: 420 },
-    { img: 'assets/product-2.svg', tag: 'לחות', name: 'תמצית ביו־סלולרית', desc: 'תמצית לחות תלת־מולקולרית לעור נימוח, גמיש ומלא חיות.', price: 380 },
-    { img: 'assets/product-3.svg', tag: 'עיניים', name: 'קרם עיניים כרומוזום', desc: 'מפחית נפיחות וקווים דקים סביב העין עם קפאין ופפטידים.', price: 290 },
-    { img: 'assets/product-4.svg', tag: 'יוקרה', name: 'שמן פנים זהב', desc: 'תערובת שמנים יקרים ל-24K זוהר, הזנה עמוקה וגימור קטיפתי.', price: 460 },
-    { img: 'assets/product-5.svg', tag: 'טיפול', name: 'מסכת התחדשות תאית', desc: 'מסכת לילה עשירה המחדשת את העור בזמן שאתם ישנים.', price: 340 },
-    { img: 'assets/product-6.svg', tag: 'ניקוי', name: 'תרחיף ניקוי עדין', desc: 'מנקה לעומק מבלי לפגוע במחסום הלחות הטבעי של העור.', price: 240 },
+    { handle:'deep-nourishing-cream', img: CDN+'IMG_8914.jpg?v=1767447064', fallback:'assets/product-1.svg', tag:'רב מכר', name:'קרם הזנה עמוק', en:'Deep Nourishing Cream · 50ml',
+      desc:'פורמולה עשירה מחמאת שיאה, חמאת מנגו ושמנים בכבישה קרה — הזנה עמוקה שמחזירה לעור רכות, גמישות וברק טבעי.', price:129.90 },
+    { handle:'cell-restore-cream', img: CDN+'92B4262D-79F7-4E12-A262-722B4182B80D.jpg?v=1778480312', fallback:'assets/product-4.svg', tag:'פרימיום', name:'קרם לשיקום העור', en:'Cell Restore Cream',
+      desc:'קרם עשיר לשיקום עור יבש במיוחד, מגורה או סדוק. חמאת שיאה וקקאו וקומפלקס שמנים בכבישה קרה להזנה עמוקה.', price:169.90 },
+    { handle:'foot-cream', img: CDN+'7980E029-1E3D-4BBA-A1E2-47269A7A0B11.png?v=1778480313', fallback:'assets/product-3.svg', tag:'רגליים', name:'קרם רגליים', en:'Foot Cream',
+      desc:'קרם עשיר המזין את עור כף הרגל ושומר על רכות, גמישות ולחות מתמשכת לאורך היום.', price:119.90 },
+    { handle:'hand-cream', img: CDN+'502D02F3-81E7-4BA9-83FC-3BB6FA0DCFE2.jpg?v=1778480312', fallback:'assets/product-2.svg', tag:'ידיים', name:'קרם ידיים', en:'Hand Cream',
+      desc:'חמאת שיאה, אלוורה ושמני פירות טבעיים — מרקם קליל שנספג מהר ומותיר ידיים רכות ונעימות.', price:119.90 },
+    { handle:'body-cream', img: CDN+'DD5DC935-F231-43FB-A87D-24A78E41E7C7.png?v=1778480312', fallback:'assets/product-5.svg', tag:'גוף', name:'קרם גוף', en:'Body Cream',
+      desc:'נוסחה עשירה עם חמאת שיאה ואלוורה, ויטמין E ותמצית קלנדולה — הזנה עמוקה לעור גוף גמיש ורגוע.', price:119.90 },
+    { handle:'foot-scrub', img: CDN+'c6d79b90-a29b-49aa-afbd-bb23bdd280f3.jpg?v=1768034543', fallback:'assets/product-6.svg', tag:'פילינג', name:'פילינג לכפות הרגליים', en:'Foot Scrub',
+      desc:'פילינג פחם פעיל ובוץ ים המלח לניקוי יסודי והחלקת עור כף הרגל, לתחושת רעננות ורכות.', price:139.90 },
+    { handle:'callus-softing-spray', img: CDN+'5AE8739B-A302-4DE0-85D1-9FAD3FF189EA.png?v=1778480312', fallback:'assets/product-6.svg', tag:'רגליים', name:'תרסיס לריכוך יבלות', en:'Callus Softening Spray · 250ml',
+      desc:'תרסיס חומצות פירות ותמציות בוטניות לריכוך עור מחוספס והסרת תאים יבשים, עם חומצה היאלורונית ללחות מיידית.', price:118.00 },
+    { handle:'enzimatic-cuticle-remover', img: CDN+'30E682BC-632F-40B4-A82A-D923B4993AE2.png?v=1778480312', fallback:'assets/product-4.svg', tag:'מניקור', name:'מסיר עורמיות אנזימטי', en:'Enzymatic Cuticle Remover',
+      desc:'אנזימים טבעיים מפפאיה המרככים את הקוטיקולה וממיסים בעדינות תאי עור עודפים — הסרה עדינה ובטוחה.', price:89.90 },
   ];
+  const STORE = 'https://chromosomecosmetics.com/products/';
+  const nis = n => '₪' + n.toFixed(2).replace(/\.00$/, '');
 
   /* ---------- Render product cards ---------- */
   const grid = $('#product-grid');
   if (grid) {
     grid.innerHTML = PRODUCTS.map(p => `
       <article class="card reveal" data-reveal data-tilt>
-        <div class="card__media">
+        <a class="card__media" href="${STORE}${p.handle}" target="_blank" rel="noopener" aria-label="${p.name}">
           <span class="card__tag">${p.tag}</span>
-          <img src="${p.img}" alt="${p.name}" loading="lazy" />
-        </div>
+          <img src="${p.img}" alt="${p.name}" loading="lazy"
+               onerror="this.onerror=null;this.src='${p.fallback}';this.closest('.card__media').classList.add('is-fallback')" />
+        </a>
         <h3 class="card__name">${p.name}</h3>
+        <p class="card__en">${p.en}</p>
         <p class="card__desc">${p.desc}</p>
         <div class="card__foot">
-          <span class="card__price">₪${p.price} <small>/ ₪</small></span>
-          <button class="card__add" data-add>הוספה</button>
+          <span class="card__price">${nis(p.price)}</span>
+          <button class="card__add" data-add>הוספה לעגלה</button>
         </div>
       </article>`).join('');
   }
