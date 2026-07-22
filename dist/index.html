@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CHROMOSOME · קוסמטיקת יוקרה</title>
+<meta name="description" content="כרומוזום קוסמטיקס — טיפוח יוקרתי לידיים, לרגליים ולגוף. חמאות ושמנים טבעיים בכבישה קרה לעור רך, מוזן וזוהר." />
+<meta name="theme-color" content="#0b0c0a" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@200;300;400;500;700&display=swap" rel="stylesheet" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cg stroke='%23c9a86a' stroke-width='3' fill='none' stroke-linecap='round'%3E%3Cpath d='M8 6 C46 26 14 34 52 54'/%3E%3Cpath d='M52 6 C14 26 46 34 8 54'/%3E%3C/g%3E%3C/svg%3E" />
+<style>
+:root{
+  --bg:#0b0c0a;--ink:#f4efe6;--ink-soft:#c9c3b6;--ink-dim:#8a857a;--line:rgba(244,239,230,.10);
+  --gold:#c9a86a;--gold-lt:#e8d5a8;--gold-dk:#a07c42;--emerald:#7fd1b9;--emerald-dk:#3f9a83;--rose:#d99a8f;
+  --grad-gold:linear-gradient(135deg,#e8d5a8,#c9a86a 45%,#a07c42);
+  --fd:"Frank Ruhl Libre",serif;--fb:"Heebo",system-ui,sans-serif;
+  --ease:cubic-bezier(.22,.61,.36,1);--eo:cubic-bezier(.16,1,.3,1);--maxw:1280px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-weight:300;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--gold);color:#000}
+body::before{content:"";position:fixed;inset:0;z-index:-2;background:
+  radial-gradient(1200px 700px at 78% -5%,rgba(201,168,106,.16),transparent 60%),
+  radial-gradient(900px 600px at 8% 20%,rgba(127,209,185,.08),transparent 55%),
+  radial-gradient(1000px 900px at 50% 120%,rgba(201,168,106,.10),transparent 60%),
+  linear-gradient(180deg,#0b0c0a,#0e100d)}
+.grain{position:fixed;inset:0;z-index:998;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:.6em;padding:.95em 2.1em;border-radius:100px;font-weight:500;font-size:.92rem;position:relative;overflow:hidden;transition:transform .4s var(--eo),box-shadow .4s var(--ease);cursor:pointer;border:none}
+.btn--gold{background:var(--grad-gold);color:#1a1408;box-shadow:0 10px 30px -12px rgba(201,168,106,.6)}
+.btn--gold:hover{transform:translateY(-3px);box-shadow:0 18px 40px -14px rgba(201,168,106,.75)}
+.btn--ghost{border:1px solid var(--line);color:var(--ink)}
+.btn--ghost:hover{border-color:var(--gold);color:var(--gold-lt);transform:translateY(-3px)}
+/* nav */
+.nav{position:fixed;top:0;inset-inline:0;z-index:900;display:flex;align-items:center;justify-content:space-between;padding:22px clamp(20px,5vw,64px);transition:.5s var(--ease)}
+.nav.scrolled{background:rgba(11,12,10,.72);backdrop-filter:blur(18px);padding-block:14px;border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:12px}
+.logo svg{width:42px;height:42px}
+.logo b{font-family:var(--fd);font-size:1.3rem;letter-spacing:.22em;font-weight:500;color:var(--ink)}
+.nav__links{display:flex;gap:clamp(18px,2.5vw,40px)}
+.nav__links a{font-size:.9rem;color:var(--ink-soft);position:relative;padding:4px 0}
+.nav__links a::after{content:"";position:absolute;inset-inline:0;bottom:-2px;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:right;transition:transform .4s var(--ease)}
+.nav__links a:hover{color:var(--ink)}.nav__links a:hover::after{transform:scaleX(1)}
+.nav__cta{font-size:.88rem;color:var(--gold-lt);border:1px solid var(--gold-dk);padding:.6em 1.4em;border-radius:100px;transition:.4s var(--ease)}
+.nav__cta:hover{background:var(--gold);color:#1a1408}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
+.burger span{width:24px;height:1.5px;background:var(--ink)}
+/* hero */
+.hero{position:relative;min-height:100svh;display:grid;align-items:center;padding:0 clamp(20px,5vw,64px);overflow:hidden}
+.hero__helix{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.55}
+.hero__aura{position:absolute;inset-block:0;inset-inline-start:30%;width:60vw;height:60vw;max-width:760px;max-height:760px;background:radial-gradient(circle,rgba(201,168,106,.22),transparent 62%);filter:blur(20px)}
+.hero__in{position:relative;z-index:3;max-width:640px}
+.eyebrow{font-size:.8rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:26px}
+.hero h1{font-family:var(--fd);font-weight:500;font-size:clamp(3rem,8.5vw,7rem);line-height:.98;margin-bottom:30px}
+.hero h1 span{display:block}
+.hero h1 .g{background:var(--grad-gold);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero__sub{font-size:clamp(1rem,1.4vw,1.18rem);color:var(--ink-soft);max-width:30em;margin-bottom:40px}
+.hero__cta{display:flex;gap:16px;flex-wrap:wrap}
+.stage{position:absolute;z-index:2;inset-block:0;inset-inline-end:clamp(-40px,2vw,80px);width:min(46vw,560px);height:100%;perspective:1400px;pointer-events:none}
+.floaty{position:absolute;will-change:transform;filter:drop-shadow(0 40px 60px rgba(0,0,0,.55))}
+.floaty img{border-radius:18px}
+.f-main{width:56%;top:50%;inset-inline-start:50%;translate:-50% -50%;animation:fm 7s var(--ease) infinite}
+.f-a{width:30%;top:14%;inset-inline-end:2%;animation:fa 8s var(--ease) infinite}
+.f-b{width:30%;bottom:10%;inset-inline-start:0;animation:fb 9s var(--ease) infinite}
+@keyframes fm{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-26px) rotate(2deg)}}
+@keyframes fa{0%,100%{transform:translateY(0) rotate(4deg)}50%{transform:translateY(22px) rotate(-3deg)}}
+@keyframes fb{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-20px) rotate(4deg)}}
+.scroll{position:absolute;z-index:3;bottom:34px;inset-inline-start:clamp(20px,5vw,64px);display:flex;align-items:center;gap:12px;color:var(--ink-dim);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase}
+.scroll i{width:1px;height:46px;background:linear-gradient(var(--gold),transparent);position:relative;overflow:hidden}
+.scroll i::after{content:"";position:absolute;inset-inline:0;top:-50%;height:50%;background:var(--gold);animation:sl 2s var(--ease) infinite}
+@keyframes sl{0%{transform:translateY(0)}100%{transform:translateY(300%)}}
+/* marquee */
+.marquee{border-block:1px solid var(--line);overflow:hidden;padding:22px 0;background:rgba(0,0,0,.2)}
+.mt{display:inline-flex;align-items:center;gap:28px;white-space:nowrap;animation:mq 28s linear infinite}
+.mt span{font-family:var(--fd);font-size:1.5rem;color:var(--ink-soft)}.mt b{color:var(--gold)}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(50%)}}
+/* sections */
+section{position:relative}
+.head{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,64px) 60px}
+.head .eyebrow{margin-bottom:18px}
+.head h2{font-family:var(--fd);font-weight:500;font-size:clamp(2.4rem,5vw,4.4rem);line-height:1.02}
+.head p{color:var(--ink-soft);max-width:34em;margin-top:20px;font-size:1.05rem}
+/* philosophy */
+.philos{padding:clamp(90px,12vw,160px) 0}
+.pg{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,64px)}
+.pg .num{font-size:.8rem;letter-spacing:.26em;color:var(--gold);text-transform:uppercase;margin-bottom:26px}
+.pg h2{font-family:var(--fd);font-weight:500;font-size:clamp(2.2rem,5.5vw,5rem);line-height:1.04;max-width:14ch}
+.pg h2 span{color:var(--gold)}
+.pg .body{color:var(--ink-soft);font-size:clamp(1.05rem,1.5vw,1.3rem);max-width:42ch;margin-top:34px}
+.pg .body em{color:var(--ink);font-style:italic;font-family:var(--fd)}
+.stats{display:flex;flex-wrap:wrap;gap:clamp(28px,5vw,72px);margin-top:64px;padding-top:40px;border-top:1px solid var(--line)}
+.stat b{display:block;font-family:var(--fd);font-size:clamp(2.4rem,4vw,3.4rem);color:var(--gold-lt);line-height:1}
+.stat span{color:var(--ink-dim);font-size:.92rem;max-width:16ch;display:block;margin-top:10px}
+/* products */
+.products{padding:clamp(60px,8vw,110px) 0 clamp(90px,12vw,150px)}
+.grid{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,64px);display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,1.6vw,26px)}
+.card{border:1px solid var(--line);border-radius:20px;padding:16px 16px 22px;transition:transform .5s var(--eo),border-color .5s,box-shadow .5s;will-change:transform}
+.card:hover{border-color:rgba(201,168,106,.4);box-shadow:0 30px 60px -30px rgba(0,0,0,.7)}
+.media{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:14px;margin-bottom:16px;background:linear-gradient(160deg,#f4efe6,#e7ddca 60%,#dccbb0)}
+.media img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--eo)}
+.card:hover .media img{transform:scale(1.06)}
+.tag{position:absolute;top:12px;inset-inline-start:12px;z-index:2;font-size:.66rem;letter-spacing:.12em;color:#2a2010;background:rgba(244,239,230,.9);padding:.4em .9em;border-radius:100px;text-transform:uppercase;font-weight:500}
+.name{font-family:var(--fd);font-size:1.25rem;font-weight:500;margin-bottom:2px}
+.en{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:9px}
+.desc{color:var(--ink-dim);font-size:.85rem;min-height:4.2em}
+.foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.price{font-family:var(--fd);font-size:1.15rem;color:var(--gold-lt)}
+.add{background:none;border:1px solid var(--line);color:var(--ink);border-radius:100px;padding:.55em 1.1em;font-family:var(--fb);font-size:.8rem;cursor:pointer;transition:.4s var(--ease)}
+.add:hover{background:var(--gold);color:#1a1408;border-color:var(--gold)}
+/* science */
+.science{padding:clamp(90px,12vw,160px) 0;overflow:hidden}
+.science__aura{position:absolute;inset-inline-end:-10%;top:10%;width:50vw;height:50vw;max-width:620px;max-height:620px;background:radial-gradient(circle,rgba(127,209,185,.14),transparent 62%);filter:blur(30px)}
+.mols{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,64px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,44px)}
+.mol{display:flex;gap:24px;align-items:flex-start;padding:28px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.025),transparent);transition:.5s var(--eo)}
+.mol:hover{border-color:rgba(127,209,185,.35);transform:translateY(-4px)}
+.ring{position:relative;width:60px;height:60px;flex:none}
+.ring span{position:absolute;inset:0;border:1px solid var(--emerald-dk);border-radius:50%;border-inline-color:transparent;animation:orbit 6s linear infinite}
+.ring span:nth-child(2){inset:8px;border-color:var(--gold-dk);border-inline-color:transparent;animation-duration:4s;animation-direction:reverse}
+.ring span:nth-child(3){inset:22px;border:none;background:radial-gradient(circle,var(--gold-lt),transparent 70%);animation:pd 3s ease-in-out infinite}
+@keyframes orbit{to{transform:rotate(360deg)}}@keyframes pd{0%,100%{transform:scale(.7);opacity:.6}50%{transform:scale(1);opacity:1}}
+.mol h3{font-family:var(--fd);font-size:1.35rem;font-weight:500;margin-bottom:8px}
+.mol p{color:var(--ink-dim);font-size:.94rem}
+/* ritual */
+.ritual{padding:clamp(80px,10vw,140px) 0}
+.steps{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,64px);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,50px)}
+.step{text-align:center;padding:40px 24px;position:relative}
+.step:not(:last-child)::after{content:"";position:absolute;inset-inline-start:-1px;top:30%;bottom:30%;width:1px;background:var(--line)}
+.step .n{display:grid;place-items:center;width:70px;height:70px;margin:0 auto 22px;font-family:var(--fd);font-size:1.8rem;color:var(--gold-lt);border:1px solid var(--gold-dk);border-radius:50%}
+.step h3{font-family:var(--fd);font-size:1.6rem;font-weight:500;margin-bottom:12px}
+.step p{color:var(--ink-dim);font-size:.96rem;max-width:26ch;margin:0 auto}
+/* quote */
+.quotes{padding:clamp(80px,10vw,140px) 0;border-block:1px solid var(--line);background:rgba(0,0,0,.2)}
+.qw{max-width:900px;margin:0 auto;padding:0 clamp(20px,5vw,64px);text-align:center}
+.qw p{font-family:var(--fd);font-size:clamp(1.6rem,3.4vw,2.8rem);line-height:1.3}
+.qw cite{display:block;margin-top:28px;color:var(--gold);font-style:normal;letter-spacing:.1em;font-size:.9rem}
+/* join */
+.join{padding:clamp(80px,10vw,150px) clamp(20px,5vw,64px)}
+.jc{max-width:720px;margin:0 auto;text-align:center;border:1px solid var(--line);border-radius:28px;padding:clamp(40px,6vw,72px);background:radial-gradient(600px circle at 50% -20%,rgba(201,168,106,.14),transparent 60%),linear-gradient(180deg,rgba(255,255,255,.03),transparent)}
+.jc h2{font-family:var(--fd);font-size:clamp(1.9rem,4vw,3rem);font-weight:500;margin-bottom:14px}
+.jc p{color:var(--ink-soft);max-width:40ch;margin:0 auto 34px}
+.jf{display:flex;gap:12px;max-width:460px;margin:0 auto;flex-wrap:wrap}
+.jf input{flex:1;min-width:200px;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:100px;padding:.95em 1.4em;color:var(--ink);font-family:var(--fb);font-size:.95rem}
+.jf input:focus{outline:none;border-color:var(--gold)}
+.jmsg{display:block;margin-top:18px;color:var(--emerald);min-height:1.2em;font-size:.9rem}
+/* footer */
+.footer{border-top:1px solid var(--line);padding:clamp(60px,7vw,96px) clamp(20px,5vw,64px) 40px}
+.fg{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+.fb-brand .logo{margin-bottom:18px}
+.fb-brand p{color:var(--ink-dim);max-width:30ch;font-size:.95rem}
+.fcol h4{font-family:var(--fd);font-size:1.05rem;font-weight:500;margin-bottom:18px}
+.fcol a{display:block;color:var(--ink-dim);font-size:.92rem;padding:5px 0;transition:.3s}
+.fcol a:hover{color:var(--gold-lt);padding-inline-start:6px}
+.fbase{max-width:var(--maxw);margin:60px auto 0;padding-top:26px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--ink-dim);font-size:.82rem}
+.made{font-family:var(--fd);font-style:italic;color:var(--gold)}
+/* reveal */
+[data-r]{opacity:0;transform:translateY(38px);filter:blur(6px);transition:opacity 1s var(--eo),transform 1s var(--eo),filter 1s var(--eo)}
+[data-r].in{opacity:1;transform:none;filter:none}
+[data-d="1"]{transition-delay:.12s}[data-d="2"]{transition-delay:.24s}[data-d="3"]{transition-delay:.36s}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.fg{grid-template-columns:1fr 1fr}.stage{opacity:.5;inset-inline-end:-15%}}
+@media(max-width:780px){
+  .nav__links,.nav__cta{display:none}.burger{display:flex}
+  .nav__links.open{display:flex;position:fixed;inset:0;background:rgba(11,12,10,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:30px;z-index:899}
+  .nav__links.open a{font-size:1.6rem;font-family:var(--fd)}
+  .hero{padding-top:120px;min-height:auto}.stage{position:relative;width:100%;height:360px;margin:26px auto -20px;opacity:1;inset:auto}
+  .mols,.steps{grid-template-columns:1fr}.step:not(:last-child)::after{display:none}.fbase{flex-direction:column}
+}
+@media(max-width:520px){.grid,.fg{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.1ms!important}[data-r]{opacity:1;transform:none;filter:none}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<header class="nav" id="nav">
+  <a href="#top" class="logo" aria-label="כרומוזום">
+    <svg viewBox="0 0 60 60"><g stroke="url(#lg)" stroke-width="2.4" fill="none" stroke-linecap="round"><path d="M8 6 C46 26 14 34 52 54"/><path d="M52 6 C14 26 46 34 8 54"/><line x1="16" y1="14" x2="44" y2="14" opacity=".8"/><line x1="20" y1="30" x2="40" y2="30" opacity=".6"/><line x1="16" y1="46" x2="44" y2="46" opacity=".8"/></g><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8d5a8"/><stop offset="1" stop-color="#b8935a"/></linearGradient></defs></svg>
+    <b>CHROMOSOME</b>
+  </a>
+  <nav class="nav__links" id="links" aria-label="ניווט">
+    <a href="#products">מוצרים</a><a href="#science">המדע</a><a href="#ritual">הטקס</a><a href="#story">הסיפור</a>
+  </nav>
+  <a href="#join" class="nav__cta">הצטרפות</a>
+  <button class="burger" id="burger" aria-label="תפריט"><span></span><span></span></button>
+</header>
+
+<section class="hero" id="top">
+  <canvas class="hero__helix" id="helix"></canvas>
+  <div class="hero__aura"></div>
+  <div class="hero__in">
+    <p class="eyebrow" data-r>קוסמטיקה מבוססת מדע · מהדורת יוקרה</p>
+    <h1><span data-r>היופי מוצפן</span><span class="g" data-r data-d="1">בתאים שלך.</span></h1>
+    <p class="hero__sub" data-r data-d="2">סדרת טיפוח יוקרתית לידיים, לרגליים ולגוף — חמאות ושמנים טבעיים בכבישה קרה שפוגשים חושניות טהורה, לעור רך, מוזן וזוהר.</p>
+    <div class="hero__cta" data-r data-d="3"><a href="#products" class="btn btn--gold">גילוי הסדרה</a><a href="#science" class="btn btn--ghost">המדע שמאחורי</a></div>
+  </div>
+  <div class="stage" id="stage" aria-hidden="true">
+    <div class="floaty f-main" data-depth="6"><img src="https://cdn.shopify.com/s/files/1/0792/1342/8965/files/92B4262D-79F7-4E12-A262-722B4182B80D.jpg?v=1778480312" alt="" /></div>
+    <div class="floaty f-a" data-depth="14"><img src="https://cdn.shopify.com/s/files/1/0792/1342/8965/files/502D02F3-81E7-4BA9-83FC-3BB6FA0DCFE2.jpg?v=1778480312" alt="" /></div>
+    <div class="floaty f-b" data-depth="10"><img src="https://cdn.shopify.com/s/files/1/0792/1342/8965/files/IMG_8914.jpg?v=1767447064" alt="" /></div>
+  </div>
+  <a href="#marquee" class="scroll"><span>גלה</span><i></i></a>
+</section>
+
+<div class="marquee" id="marquee" aria-hidden="true"><div class="mt" id="mt">
+  <span>חמאת שיאה</span><b>·</b><span>Clean Beauty</span><b>·</b><span>כבישה קרה</span><b>·</b><span>שמנים טבעיים</span><b>·</b><span>לחות מתמשכת</span><b>·</b><span>עור רך</span><b>·</b>
+</div></div>
+
+<section class="philos" id="story"><div class="pg">
+  <div class="num" data-r>01 — הפילוסופיה</div>
+  <h2 data-r data-d="1">כל טיפת יופי מתחילה <span>ברמה התאית.</span></h2>
+  <p class="body" data-r data-d="2">בכרומוזום אנו מאמינים שהעור אינו זקוק לעוד — הוא זקוק ל<em>מדויק</em>. כל פורמולה נולדת מתוך הבנה עמוקה של הביולוגיה של העור, ומעוצבת כחוויית יוקרה שלמה: מהמרקם ועד הבושם, מהמגע ועד הזוהר.</p>
+  <div class="stats" data-r data-d="3">
+    <div class="stat"><b data-count="8">0</b><span>פורמולות בסדרה</span></div>
+    <div class="stat"><b data-count="7">0</b><span>ערכות מתנה מוכנות</span></div>
+    <div class="stat"><b data-count="100">0</b><span>% רכיבים בהשראת הטבע</span></div>
+  </div>
+</div></section>
+
+<section class="products" id="products">
+  <div class="head">
+    <p class="eyebrow" data-r>02 — הסדרה</p>
+    <h2 data-r data-d="1">הפורמולות</h2>
+    <p data-r data-d="2">שמונה פורמולות. טקס אחד שלם. כל מוצר עומד בפני עצמו — ומתעצם יחד.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section class="science" id="science">
+  <div class="science__aura"></div>
+  <div class="head"><p class="eyebrow" data-r>03 — המדע</p><h2 data-r data-d="1">מולקולות של יופי</h2></div>
+  <div class="mols">
+    <article class="mol" data-r><div class="ring"><span></span><span></span><span></span></div><div><h3>חמאות שיאה, קקאו ומנגו</h3><p>חמאות עשירות בריכוז גבוה שמזינות לעומק, משקמות עור יבש וסדוק ומחזירות רכות וגמישות.</p></div></article>
+    <article class="mol" data-r data-d="1"><div class="ring"><span></span><span></span><span></span></div><div><h3>שמנים בכבישה קרה</h3><p>חוחובה, רוז־היפ, קמיליה ואפרסק — קומפלקס שמנים המספק לחות מתמשכת ותמיכה במחסום ההגנה הטבעי.</p></div></article>
+    <article class="mol" data-r data-d="2"><div class="ring"><span></span><span></span><span></span></div><div><h3>אנזימי פפאיה וחומצות פירות</h3><p>מרככים עור מחוספס וממיסים בעדינות תאי עור עודפים — לחלקות והתחדשות עדינה ובטוחה.</p></div></article>
+    <article class="mol" data-r data-d="3"><div class="ring"><span></span><span></span><span></span></div><div><h3>פחם פעיל ובוץ ים המלח</h3><p>מנקים לעומק, סופחים שאריות ולכלוך ומחליקים את העור לתחושת רעננות ומראה מטופח.</p></div></article>
+  </div>
+</section>
+
+<section class="ritual" id="ritual">
+  <div class="head"><p class="eyebrow" data-r>04 — הטקס</p><h2 data-r data-d="1">שלושה צעדים אל הזוהר</h2></div>
+  <div class="steps">
+    <div class="step" data-r><span class="n">א</span><h3>ריכוך וניקוי</h3><p>פילינג פחם פעיל או תרסיס לריכוך יבלות מסירים עור מחוספס ומכינים את העור לטיפול.</p></div>
+    <div class="step" data-r data-d="1"><span class="n">ב</span><h3>טיפול ממוקד</h3><p>מסיר העורמיות האנזימטי וקרם השיקום מטפלים בעדינות באזורים הזקוקים לתשומת לב.</p></div>
+    <div class="step" data-r data-d="2"><span class="n">ג</span><h3>הזנה</h3><p>קרם ההזנה העמוק וקרמי הידיים, הרגליים והגוף נועלים לחות וגימור קטיפתי.</p></div>
+  </div>
+</section>
+
+<section class="quotes"><div class="qw"><blockquote data-r>
+  <p>“תוך שלושה שבועות כפות הרגליים והידיים שלי חזרו להיות רכות כמו שלא היו שנים. רמה אחרת של טיפוח.”</p>
+  <cite>— נועה ל׳, תל אביב</cite>
+</blockquote></div></section>
+
+<section class="join" id="join"><div class="jc" data-r>
+  <h2>הצטרפו למעגל הפנימי</h2>
+  <p>גישה מוקדמת להשקות, טקסי טיפוח אישיים ומתנת פתיחה במשלוח הראשון.</p>
+  <form class="jf" id="jf" novalidate><input type="email" required placeholder="כתובת האימייל שלך" aria-label="אימייל" /><button class="btn btn--gold">הרשמה</button></form>
+  <small class="jmsg" id="jmsg"></small>
+</div></section>
+
+<footer class="footer">
+  <div class="fg">
+    <div class="fb-brand">
+      <div class="logo"><svg viewBox="0 0 60 60" width="42" height="42"><g stroke="url(#lg2)" stroke-width="2.4" fill="none" stroke-linecap="round"><path d="M8 6 C46 26 14 34 52 54"/><path d="M52 6 C14 26 46 34 8 54"/></g><defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8d5a8"/><stop offset="1" stop-color="#b8935a"/></linearGradient></defs></svg><b>CHROMOSOME</b></div>
+      <p>טיפוח יוקרתי לידיים, לרגליים ולגוף — חמאות ושמנים טבעיים, עוצב באהבה.</p>
+    </div>
+    <div class="fcol"><h4>ניווט</h4><a href="#products">מוצרים</a><a href="#science">המדע</a><a href="#ritual">הטקס</a><a href="#story">הסיפור</a></div>
+    <div class="fcol"><h4>שירות</h4><a href="#">משלוחים והחזרות</a><a href="#">שאלות נפוצות</a><a href="#">צור קשר</a><a href="#">מדיניות פרטיות</a></div>
+    <div class="fcol"><h4>עקבו אחרינו</h4><a href="https://www.instagram.com/chromosome_cosmetics/" target="_blank" rel="noopener">Instagram</a><a href="#">Facebook</a><a href="#">TikTok</a></div>
+  </div>
+  <div class="fbase"><span>© <span id="yr"></span> CHROMOSOME COSMETICS · כל הזכויות שמורות</span><span class="made">Crafted with care</span></div>
+</footer>
+
+<script>
+(function(){
+  var CDN='https://cdn.shopify.com/s/files/1/0792/1342/8965/files/';
+  var ST='https://chromosomecosmetics.com/products/';
+  var P=[
+    {h:'deep-nourishing-cream',img:'IMG_8914.jpg?v=1767447064',tag:'רב מכר',name:'קרם הזנה עמוק',en:'Deep Nourishing Cream · 50ml',desc:'פורמולה עשירה מחמאת שיאה, מנגו ושמנים בכבישה קרה — הזנה עמוקה שמחזירה לעור רכות וברק טבעי.',price:129.90},
+    {h:'cell-restore-cream',img:'92B4262D-79F7-4E12-A262-722B4182B80D.jpg?v=1778480312',tag:'פרימיום',name:'קרם לשיקום העור',en:'Cell Restore Cream',desc:'קרם עשיר לשיקום עור יבש במיוחד, מגורה או סדוק. חמאת שיאה וקקאו וקומפלקס שמנים בכבישה קרה.',price:169.90},
+    {h:'foot-cream',img:'7980E029-1E3D-4BBA-A1E2-47269A7A0B11.png?v=1778480313',tag:'רגליים',name:'קרם רגליים',en:'Foot Cream',desc:'קרם עשיר המזין את עור כף הרגל ושומר על רכות, גמישות ולחות מתמשכת לאורך היום.',price:119.90},
+    {h:'hand-cream',img:'502D02F3-81E7-4BA9-83FC-3BB6FA0DCFE2.jpg?v=1778480312',tag:'ידיים',name:'קרם ידיים',en:'Hand Cream',desc:'חמאת שיאה, אלוורה ושמני פירות טבעיים — מרקם קליל שנספג מהר ומותיר ידיים רכות ונעימות.',price:119.90},
+    {h:'body-cream',img:'DD5DC935-F231-43FB-A87D-24A78E41E7C7.png?v=1778480312',tag:'גוף',name:'קרם גוף',en:'Body Cream',desc:'נוסחה עשירה עם חמאת שיאה ואלוורה, ויטמין E ותמצית קלנדולה — הזנה עמוקה לעור גוף גמיש ורגוע.',price:119.90},
+    {h:'foot-scrub',img:'c6d79b90-a29b-49aa-afbd-bb23bdd280f3.jpg?v=1768034543',tag:'פילינג',name:'פילינג לכפות הרגליים',en:'Foot Scrub',desc:'פילינג פחם פעיל ובוץ ים המלח לניקוי יסודי והחלקת עור כף הרגל, לתחושת רעננות ורכות.',price:139.90},
+    {h:'callus-softing-spray',img:'5AE8739B-A302-4DE0-85D1-9FAD3FF189EA.png?v=1778480312',tag:'רגליים',name:'תרסיס לריכוך יבלות',en:'Callus Softening Spray · 250ml',desc:'תרסיס חומצות פירות ותמציות בוטניות לריכוך עור מחוספס והסרת תאים יבשים, עם חומצה היאלורונית ללחות מיידית.',price:118.00},
+    {h:'enzimatic-cuticle-remover',img:'30E682BC-632F-40B4-A82A-D923B4993AE2.png?v=1778480312',tag:'מניקור',name:'מסיר עורמיות אנזימטי',en:'Enzymatic Cuticle Remover',desc:'אנזימים טבעיים מפפאיה המרככים את הקוטיקולה וממיסים בעדינות תאי עור עודפים — הסרה עדינה ובטוחה.',price:89.90}
+  ];
+  var nis=function(n){return '₪'+n.toFixed(2).replace(/\.00$/,'');};
+  var g=document.getElementById('grid');
+  g.innerHTML=P.map(function(p){return '<article class="card" data-r data-tilt>'+
+    '<a class="media" href="'+ST+p.h+'" target="_blank" rel="noopener">'+
+    '<span class="tag">'+p.tag+'</span>'+
+    '<img src="'+CDN+p.img+'" alt="'+p.name+'" loading="lazy" onerror="this.style.opacity=0"/></a>'+
+    '<h3 class="name">'+p.name+'</h3><p class="en">'+p.en+'</p><p class="desc">'+p.desc+'</p>'+
+    '<div class="foot"><span class="price">'+nis(p.price)+'</span><button class="add">הוספה לעגלה</button></div></article>';}).join('');
+
+  // duplicate marquee for seamless loop
+  var mt=document.getElementById('mt'); if(mt) mt.innerHTML+=mt.innerHTML;
+
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nav=document.getElementById('nav');
+  addEventListener('scroll',function(){nav.classList.toggle('scrolled',scrollY>40);},{passive:true});
+  var burger=document.getElementById('burger'),links=document.getElementById('links');
+  burger.addEventListener('click',function(){links.classList.toggle('open');});
+  [].forEach.call(links.querySelectorAll('a'),function(a){a.addEventListener('click',function(){links.classList.remove('open');});});
+
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  [].forEach.call(document.querySelectorAll('[data-r]'),function(el){io.observe(el);});
+
+  var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var el=e.target,t=+el.getAttribute('data-count'),n=0,s=Math.max(1,Math.ceil(t/45));(function tick(){n=Math.min(t,n+s);el.textContent=n;if(n<t)requestAnimationFrame(tick);})();cio.unobserve(el);});},{threshold:.6});
+  [].forEach.call(document.querySelectorAll('[data-count]'),function(c){cio.observe(c);});
+
+  var stage=document.getElementById('stage');
+  if(stage&&!reduce){var ds=stage.querySelectorAll('[data-depth]'),tx=0,ty=0,rx=0,ry=0;
+    addEventListener('mousemove',function(e){tx=(e.clientX/innerWidth-.5);ty=(e.clientY/innerHeight-.5);});
+    (function loop(){rx+=(tx-rx)*.06;ry+=(ty-ry)*.06;[].forEach.call(ds,function(el){var d=+el.getAttribute('data-depth');el.style.transform='translate3d('+(-rx*d)+'px,'+(-ry*d)+'px,0)';});requestAnimationFrame(loop);})();}
+
+  if(!reduce){[].forEach.call(document.querySelectorAll('[data-tilt]'),function(c){
+    c.addEventListener('mousemove',function(e){var r=c.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;c.style.transform='perspective(900px) rotateY('+((px-.5)*7)+'deg) rotateX('+(-(py-.5)*7)+'deg) translateY(-6px)';});
+    c.addEventListener('mouseleave',function(){c.style.transform='';});});}
+
+  document.addEventListener('click',function(e){if(e.target.classList&&e.target.classList.contains('add')){var t=e.target,o=t.textContent;t.textContent='נוסף ✓';setTimeout(function(){t.textContent=o;},1200);}});
+
+  var jf=document.getElementById('jf'),jmsg=document.getElementById('jmsg');
+  jf.addEventListener('submit',function(e){e.preventDefault();var v=jf.querySelector('input').value.trim(),ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);jmsg.style.color=ok?'var(--emerald)':'var(--rose)';jmsg.textContent=ok?'תודה! ברוכה הבאה למעגל הפנימי של כרומוזום ✦':'נא להזין כתובת אימייל תקינה';if(ok)jf.reset();});
+
+  document.getElementById('yr').textContent=new Date().getFullYear();
+
+  var cv=document.getElementById('helix');
+  if(cv&&!reduce){var cx2=cv.getContext('2d'),W,H,dpr;
+    function rs(){dpr=Math.min(devicePixelRatio||1,2);W=cv.width=cv.offsetWidth*dpr;H=cv.height=cv.offsetHeight*dpr;}rs();addEventListener('resize',rs);
+    var t=0;(function draw(){cx2.clearRect(0,0,W,H);var cxp=W*.72,amp=Math.min(W,H)*.10,nodes=34,gap=H/nodes;
+      for(var i=0;i<nodes;i++){var yy=i*gap,ph=i*.34+t,x1=cxp+Math.sin(ph)*amp,x2=cxp+Math.sin(ph+Math.PI)*amp,dp=(Math.cos(ph)+1)/2;
+        cx2.strokeStyle='rgba(201,168,106,'+(.05+dp*.14)+')';cx2.lineWidth=dpr;cx2.beginPath();cx2.moveTo(x1,yy);cx2.lineTo(x2,yy);cx2.stroke();
+        cx2.fillStyle='rgba(232,213,168,'+(.25+dp*.55)+')';cx2.beginPath();cx2.arc(x1,yy,(2+dp*3)*dpr,0,7);cx2.fill();
+        cx2.fillStyle='rgba(127,209,185,'+(.2+(1-dp)*.45)+')';cx2.beginPath();cx2.arc(x2,yy,(2+(1-dp)*3)*dpr,0,7);cx2.fill();}
+      t+=.012;requestAnimationFrame(draw);})();}
+})();
+</script>
+</body>
+</html>
