@@ -1,11 +1,9 @@
-import ScrollVideo from "@/components/ScrollVideo";
+import Hero from "@/components/Hero";
 import ProductCard from "@/components/ProductCard";
 import Reveal from "@/components/Reveal";
 import { getProducts } from "@/lib/shopify";
 
-const VIDEO_A =
-  "https://cdn.shopify.com/videos/c/vp/a973874d819e414f9c199d50eb09e285/a973874d819e414f9c199d50eb09e285.SD-480p-1.5Mbps-91731697.mp4";
-const VIDEO_B =
+const STORY_VIDEO =
   "https://cdn.shopify.com/videos/c/vp/c5139a9cc72a4fb48081eff1f68ec4cd/c5139a9cc72a4fb48081eff1f68ec4cd.SD-480p-1.5Mbps-91731696.mp4";
 
 const INGREDIENTS = [
@@ -20,18 +18,8 @@ export default async function Home() {
 
   return (
     <main id="top">
-      {/* ===== Section 1 — video that plays ~1s then scroll-scrubs ===== */}
-      <ScrollVideo src={VIDEO_A} autoIntro introMs={1000} showCue>
-        <p className="eyebrow" style={{ marginBottom: 22 }}>Professional Cosmetics</p>
-        <h1 className="display">היופי מתחיל<br /><span className="gold-text">בתא.</span></h1>
-        <p>קוסמטיקה מקצועית מבוססת טבע — קסם בגבול המודרני.</p>
-      </ScrollVideo>
-
-      {/* ===== Section 2 — static until scrolled into view, then scrubs ===== */}
-      <ScrollVideo src={VIDEO_B}>
-        <h2 className="display gold-text">טבע. מדע. מגע.</h2>
-        <p>כל פורמולה נולדת מתוך דיוק — לעור רך, מוזן וזוהר.</p>
-      </ScrollVideo>
+      {/* ===== Hero: mobile = 2 scroll-scrub videos, desktop = static hero ===== */}
+      <Hero />
 
       {/* ===== Marquee ===== */}
       <div className="marquee" aria-hidden>
@@ -90,8 +78,7 @@ export default async function Home() {
             </p>
           </Reveal>
           <Reveal delay={1} className="split__media">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <video src={VIDEO_B} muted loop autoPlay playsInline />
+            <video src={STORY_VIDEO} muted loop autoPlay playsInline />
           </Reveal>
         </div>
       </section>

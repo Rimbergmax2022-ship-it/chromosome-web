@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import logo from "@/public/logo.jpeg";
+import mark from "@/public/mark.png";
 
 const LINKS = [
   { href: "#products", label: "מוצרים" },
@@ -24,7 +24,8 @@ export default function Nav() {
   return (
     <header className={`nav ${scrolled ? "nav--scrolled" : ""}`}>
       <a href="#top" className="nav__logo" aria-label="Chromosome — לדף הבית">
-        <Image src={logo} alt="Chromosome" width={132} height={44} priority />
+        <Image src={mark} alt="" width={26} height={47} priority />
+        <span className="nav__word">CHROMOSOME</span>
       </a>
 
       <nav className={`nav__links ${open ? "open" : ""}`} aria-label="ניווט ראשי">
@@ -57,7 +58,10 @@ export default function Nav() {
           background: rgba(6, 6, 6, 0.72); backdrop-filter: blur(18px) saturate(1.1);
           padding-block: 12px; border-bottom: 1px solid var(--line);
         }
-        .nav__logo :global(img) { height: 44px; width: auto; object-fit: contain; }
+        .nav__logo { display: flex; align-items: center; gap: 11px; }
+        .nav__logo :global(img) { height: 42px; width: auto; object-fit: contain; }
+        .nav__word { font-family: var(--font-suez), serif; font-size: 1.15rem; letter-spacing: 0.2em; color: var(--ink); padding-inline-start: 2px; }
+        @media (max-width: 480px) { .nav__word { display: none; } }
         .nav__links { display: flex; gap: clamp(18px, 2.6vw, 42px); }
         .nav__links a { font-size: 0.98rem; color: var(--ink-soft); position: relative; padding: 4px 0; transition: color 0.3s; }
         .nav__links a::after {
