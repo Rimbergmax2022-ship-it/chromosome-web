@@ -3,8 +3,7 @@ import ProductCard from "@/components/ProductCard";
 import Reveal from "@/components/Reveal";
 import { getProducts } from "@/lib/shopify";
 
-const STORY_VIDEO =
-  "https://cdn.shopify.com/videos/c/vp/c5139a9cc72a4fb48081eff1f68ec4cd/c5139a9cc72a4fb48081eff1f68ec4cd.SD-480p-1.5Mbps-91731696.mp4";
+const STORY_VIDEO = "/videos/b.mp4";
 
 const INGREDIENTS = [
   { h: "חמאות שיאה, קקאו ומנגו", p: "חמאות עשירות בריכוז גבוה המזינות לעומק ומחזירות לעור רכות וגמישות." },

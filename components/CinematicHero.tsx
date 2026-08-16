@@ -12,10 +12,9 @@ import { useEffect, useRef } from "react";
  * Safari renders the seeked frames instead of showing black.
  */
 
-const VIDEO_A =
-  "https://cdn.shopify.com/videos/c/vp/a973874d819e414f9c199d50eb09e285/a973874d819e414f9c199d50eb09e285.SD-480p-1.5Mbps-91731697.mp4";
-const VIDEO_B =
-  "https://cdn.shopify.com/videos/c/vp/c5139a9cc72a4fb48081eff1f68ec4cd/c5139a9cc72a4fb48081eff1f68ec4cd.SD-480p-1.5Mbps-91731696.mp4";
+// Self-hosted HD clips (H.264, 1080x1920). A = jars falling from above, B = submerged.
+const VIDEO_A = "/videos/a.mp4";
+const VIDEO_B = "/videos/b.mp4";
 
 const INTRO_MS = 2000;
 
