@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Nav from "@/components/Nav";
 
 const suez = localFont({
   src: "./fonts/SuezOne-Regular.ttf",
@@ -30,7 +29,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="he" dir="rtl" className={suez.variable}>
       <body>
         <div className="grain" aria-hidden />
-        <Nav />
         {children}
       </body>
     </html>
