@@ -3,11 +3,13 @@
 import { useEffect, useRef } from "react";
 
 /**
- * One pinned, cinematic intro (mobile). The stage stays fixed while you scroll
- * through a tall track; two muted videos autoplay and cross-fade (A → B), and
- * three text "beats" rise in with a dissolving blur as scroll advances, then
- * lift away. Autoplay (not frame-scrubbing) keeps it smooth and black-free on
- * iOS Safari.
+ * One pinned, cinematic intro (mobile).
+ *
+ * Video A plays on its own for ~2s, then the scroll position scrubs it
+ * (down = forward, up = back). Around the middle it cross-fades to video B,
+ * which is scrubbed the same way. Three text beats rise in with a dissolving
+ * blur as scroll advances. Videos are primed (muted play → pause) so iOS
+ * Safari renders the seeked frames instead of showing black.
  */
 
 const VIDEO_A =
@@ -15,11 +17,13 @@ const VIDEO_A =
 const VIDEO_B =
   "https://cdn.shopify.com/videos/c/vp/c5139a9cc72a4fb48081eff1f68ec4cd/c5139a9cc72a4fb48081eff1f68ec4cd.SD-480p-1.5Mbps-91731696.mp4";
 
-// Each beat: hidden < start, rises in start→in, holds in→out, lifts out out→end.
+const INTRO_MS = 2000;
+
+// beat 1 is present from the start and lifts away; beats 2 & 3 rise in.
 const BEATS = [
-  { start: 0.0, in: 0.08, out: 0.2, end: 0.28 },
-  { start: 0.34, in: 0.44, out: 0.56, end: 0.64 },
-  { start: 0.7, in: 0.8, out: 1.01, end: 1.01 },
+  { start: 0.0, in: 0.0, out: 0.16, end: 0.24 },
+  { start: 0.3, in: 0.42, out: 0.56, end: 0.64 },
+  { start: 0.7, in: 0.82, out: 1.02, end: 1.02 },
 ];
 
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
@@ -40,30 +44,74 @@ export default function CinematicHero() {
     const wrap = wrapRef.current;
     const vA = aRef.current;
     const vB = bRef.current;
-    if (!wrap) return;
+    if (!wrap || !vA || !vB) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // Keep the muted videos playing (iOS-safe).
-    const kick = (v: HTMLVideoElement | null) => {
-      if (!v) return;
-      v.muted = true;
-      const p = v.play();
-      if (p && typeof p.then === "function") p.catch(() => {});
-    };
-    kick(vA); kick(vB);
-    const unlock = () => { kick(vA); kick(vB); };
-    window.addEventListener("touchstart", unlock, { passive: true, once: true });
-    window.addEventListener("click", unlock, { once: true });
-
+    let dA = 0, dB = 0;
+    let curA = 0, curB = 0;
+    let introActive = !reduce;
+    let introTimer = 0;
     let raf = 0;
     let disposed = false;
 
+    for (const v of [vA, vB]) {
+      v.muted = true;
+      v.setAttribute("muted", "");
+      v.setAttribute("playsinline", "");
+      v.setAttribute("webkit-playsinline", "true");
+    }
+
+    const onMetaA = () => { dA = vA.duration || 0; };
+    const onMetaB = () => { dB = vB.duration || 0; };
+    vA.addEventListener("loadedmetadata", onMetaA);
+    vB.addEventListener("loadedmetadata", onMetaB);
+    if (vA.readyState >= 1) onMetaA();
+    if (vB.readyState >= 1) onMetaB();
+
+    const endIntro = () => {
+      if (!introActive) return;
+      introActive = false;
+      try { vA.pause(); } catch {}
+      curA = vA.currentTime;
+    };
+
+    const startIntro = () => {
+      if (reduce) { introActive = false; return; }
+      const p = vA.play();
+      if (p && typeof p.then === "function") p.catch(() => { introActive = false; });
+      introTimer = window.setTimeout(endIntro, INTRO_MS);
+    };
+
+    // Decode a frame of B (kept hidden) so iOS renders its seeks later.
+    const primeB = () => {
+      const p = vB.play();
+      if (p && typeof p.then === "function") {
+        p.then(() => { vB.pause(); try { if (vB.currentTime < 0.02) vB.currentTime = 0.03; } catch {} }).catch(() => {});
+      } else { try { vB.pause(); } catch {} }
+    };
+
+    const onFirstScroll = () => { if (introActive) { clearTimeout(introTimer); endIntro(); } };
+    const unlock = () => { if (introActive) vA.play().catch(() => {}); primeB(); };
+
+    window.addEventListener("scroll", onFirstScroll, { passive: true });
+    window.addEventListener("touchmove", onFirstScroll, { passive: true });
+    window.addEventListener("touchstart", unlock, { passive: true, once: true });
+    window.addEventListener("click", unlock, { once: true });
+
+    try { vA.load(); } catch {}
+    try { vB.load(); } catch {}
+    startIntro();
+    primeB();
+
+    const PA = 0.52; // scroll fraction over which A scrubs
+    const PB = 0.48; // B starts scrubbing from here
+
     const applyBeat = (el: HTMLDivElement | null, p: number, b: typeof BEATS[number]) => {
       if (!el) return;
-      let opacity = 0, y = 40, blur = 12;
+      let opacity = 0, y = 44, blur = 12;
       if (p >= b.start && p <= b.end) {
-        if (p < b.in) {
+        if (b.in > b.start && p < b.in) {
           const t = easeOut(clamp01((p - b.start) / (b.in - b.start)));
           opacity = t; y = (1 - t) * 44; blur = (1 - t) * 12;
         } else if (p <= b.out) {
@@ -84,22 +132,36 @@ export default function CinematicHero() {
       const total = wrap.offsetHeight - window.innerHeight;
       const p = total > 0 ? clamp01(-rect.top / total) : 0;
 
-      // Cross-fade A → B around the middle.
-      if (vB) vB.style.opacity = String(clamp01((p - 0.46) / (0.62 - 0.46)));
+      vB.style.opacity = String(clamp01((p - 0.46) / (0.62 - 0.46)));
+
+      // Scrub A (after its 2s intro): intro covered [0..introEnd], scroll covers the rest.
+      if (!introActive && dA > 0) {
+        const introEndA = Math.min(INTRO_MS / 1000, dA);
+        const tA = clamp01(p / PA);
+        const target = introEndA + tA * Math.max(0, dA - introEndA);
+        curA += (target - curA) * 0.14;
+        if (Math.abs(target - curA) < 0.002) curA = target;
+        if (Math.abs(vA.currentTime - curA) > 0.01) { try { vA.currentTime = curA; } catch {} }
+      }
+
+      // Scrub B across the second half.
+      if (dB > 0) {
+        const tB = clamp01((p - PB) / (1 - PB));
+        const target = tB * dB;
+        curB += (target - curB) * 0.14;
+        if (Math.abs(target - curB) < 0.002) curB = target;
+        if (Math.abs(vB.currentTime - curB) > 0.01) { try { vB.currentTime = curB; } catch {} }
+      }
 
       beatRefs.forEach((r, i) => applyBeat(r.current, p, BEATS[i]));
-
-      if (cueRef.current) cueRef.current.style.opacity = String(clamp01(1 - p / 0.08));
+      if (cueRef.current) cueRef.current.style.opacity = String(clamp01(1 - p / 0.06));
 
       raf = requestAnimationFrame(render);
     };
 
     if (reduce) {
-      // Static fallback: show all beats, no pinning math.
-      beatRefs.forEach((r) => {
-        if (r.current) { r.current.style.opacity = "1"; r.current.style.transform = "none"; r.current.style.filter = "none"; }
-      });
-      if (vB) vB.style.opacity = "0";
+      beatRefs.forEach((r) => { if (r.current) { r.current.style.opacity = "1"; r.current.style.transform = "none"; r.current.style.filter = "none"; } });
+      vB.style.opacity = "0";
     } else {
       raf = requestAnimationFrame(render);
     }
@@ -107,6 +169,11 @@ export default function CinematicHero() {
     return () => {
       disposed = true;
       cancelAnimationFrame(raf);
+      clearTimeout(introTimer);
+      vA.removeEventListener("loadedmetadata", onMetaA);
+      vB.removeEventListener("loadedmetadata", onMetaB);
+      window.removeEventListener("scroll", onFirstScroll);
+      window.removeEventListener("touchmove", onFirstScroll);
       window.removeEventListener("touchstart", unlock);
       window.removeEventListener("click", unlock);
     };
@@ -115,8 +182,8 @@ export default function CinematicHero() {
   return (
     <section className="cine" ref={wrapRef}>
       <div className="cine__stage">
-        <video ref={aRef} className="cine__video" src={VIDEO_A} muted playsInline autoPlay loop preload="auto" disableRemotePlayback />
-        <video ref={bRef} className="cine__video cine__video--b" src={VIDEO_B} muted playsInline autoPlay loop preload="auto" disableRemotePlayback />
+        <video ref={aRef} className="cine__video" src={VIDEO_A} muted playsInline preload="auto" disableRemotePlayback />
+        <video ref={bRef} className="cine__video cine__video--b" src={VIDEO_B} muted playsInline preload="auto" disableRemotePlayback />
         <div className="cine__scrim" />
 
         <div className="cine__beats">
@@ -142,7 +209,7 @@ export default function CinematicHero() {
       </div>
 
       <style jsx>{`
-        .cine { position: relative; height: 420vh; }
+        .cine { position: relative; height: 460vh; }
         .cine__stage { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #000; }
         .cine__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
         .cine__video--b { opacity: 0; }
